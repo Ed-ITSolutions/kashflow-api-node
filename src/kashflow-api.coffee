@@ -30,7 +30,6 @@ KashflowApi =
 
   cbWrapper: (callback) ->
     (error, result) ->
-      console.dir result
       throw result.StatusDetails if result.StatusDetails == 'Incorrect username or password'
 
       callback(error, result)

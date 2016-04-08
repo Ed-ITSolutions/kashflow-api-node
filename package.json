@@ -12,6 +12,7 @@
   "author": "Adam Laycock",
   "license": "MIT",
   "dependencies": {
+    "caller-id": "^0.1.0",
     "soap": "^0.9.1"
   },
   "devDependencies": {

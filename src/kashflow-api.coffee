@@ -1,3 +1,4 @@
+callerId = require 'caller-id'
 soap = require 'soap'
 
 KashflowApi =
@@ -17,14 +18,17 @@ KashflowApi =
 
   applyMethods: (methods) ->
     for method in methods
-      this[method] = (args, callback) ->
-        @runMethod(method, args, callback)
+      @[method] = (args, callback) ->
+        @runMethod(args, callback)
 
-  runMethod: (name, args, callback) ->
+  runMethod: (args, callback) ->
     throw 'You must supply a username and password' if @username == null or @password == null
 
     args.UserName = @username
     args.Password = @password
+
+    caller = callerId.getData()
+    name = caller.methodName
 
     @client.KashFlowAPI.KashFlowAPISoap12[name](args, @cbWrapper(callback))
 

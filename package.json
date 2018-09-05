@@ -1,10 +1,12 @@
 {
   "name": "kashflow-api",
-  "version": "0.0.1-alpha4",
+  "version": "1.0.0-alpha",
   "description": "Kashflow API",
   "main": "lib/kashflow-api.js",
+  "types": "lib/kashflow-api.d.ts",
   "scripts": {
-    "test": "grunt test"
+    "test": "jest",
+    "compile": "tsc"
   },
   "keywords": [
     "kashflow"
@@ -13,9 +15,12 @@
   "license": "MIT",
   "dependencies": {
     "caller-id": "^0.1.0",
-    "soap": "^0.9.1"
+    "soap": "^0.24.0"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.24",
+    "@types/jest": "^23.3.1",
+    "@types/node": "^10.9.4",
     "chai": "^2.3.0",
     "coffee-script": "^1.9.2",
     "grunt": "^0.4.5",
@@ -24,8 +29,10 @@
     "grunt-coveralls": "^1.0.0",
     "grunt-mocha-test": "^0.12.7",
     "grunt-shell": "^1.1.2",
+    "jest": "^23.5.0",
     "jscover": "^1.0.0",
-    "mocha": "^2.2.5",
-    "mocha-lcov-reporter": "0.0.2"
+    "mocha-lcov-reporter": "0.0.2",
+    "ts-jest": "^23.1.4",
+    "typescript": "^2.9.2"
   }
 }

@@ -1,4 +1,4 @@
-import {createClient, Client, WSDL} from 'soap'
+import {createClient, Client} from 'soap'
 import {Customer} from './api-classes/customer'
 
 export class KashflowAPI{

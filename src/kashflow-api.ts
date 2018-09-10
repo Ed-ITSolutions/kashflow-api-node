@@ -1,9 +1,8 @@
 import {createClient, Client} from 'soap'
 
-import {AccountOverview} from './api-classes/account-overview'
-import {AgedDebtorsCreditors} from './api-classes/aged-debtors-creditors'
-import {BalanceSheet} from './api-classes/balance-sheet'
-import {Customer} from './api-classes/customer'
+import {APIMethod} from './kashflow/api-method'
+import {MethodDataTypes} from './kashflow/method-data-types'
+import {MethodReturnTypes} from './kashflow/method-return-types'
 
 export class KashflowAPI{
   url = 'https://securedwebapp.com/api/service.asmx?WSDL'
@@ -34,8 +33,9 @@ export class KashflowAPI{
    * 
    * @param method The `KFAPIMethod` to call
    * @param inData The data to pass to the API call.
+   * @returns Varies depends on Input
    */
-  async call<K extends KFAPIMethod>(method: K, inData: MethodDataTypes[K]): Promise<MethodReturnTypes[K]>{
+  async call<K extends APIMethod>(method: K, inData: MethodDataTypes[K]): Promise<MethodReturnTypes[K]>{
     let data = inData as MethodDataTypes[K] & {UserName: string, Password: string}
 
     data.UserName = this.username
@@ -56,37 +56,6 @@ export class KashflowAPI{
 }
 
 export default KashflowAPI
-
-type KFAPIMethod = 
-  'GetAccountOverview' |
-  'GetAgedCreditors' |
-  'GetAgedDebtors' |
-  'GetBalanceSheet' |
-  'GetCustomer'
-
-interface MethodReturnTypes{
-  GetAccountOverview: AccountOverview
-  GetAgedCreditors: AgedDebtorsCreditors[]
-  GetAgedDebtors: AgedDebtorsCreditors[]
-  GetBalanceSheet: BalanceSheet
-  GetCustomer: Customer
-}
-
-interface MethodDataTypes{
-  GetAccountOverview: {}
-  GetAgedCreditors: {
-    AgedCreditorsDate: Date
-  }
-  GetAgedDebtors: {
-    AgedDebtorsDate: Date
-  }
-  GetBalanceSheet: {
-    Date: Date
-  }
-  GetCustomer: {
-    CustomerCode: string
-  }
-}
 
 export {AccountOverview} from './api-classes/account-overview'
 export {AgedDebtorsCreditors} from './api-classes/aged-debtors-creditors'
@@ -120,3 +89,7 @@ export {ReceiptNote} from './api-classes/receipt-note'
 export {Supplier} from './api-classes/supplier'
 export {TransactionInformation} from './api-classes/transaction-information'
 export {VATReport} from './api-classes/vat-report'
+
+export {APIMethod} from './kashflow/api-method'
+export {MethodDataTypes} from './kashflow/method-data-types'
+export {MethodReturnTypes} from './kashflow/method-return-types'

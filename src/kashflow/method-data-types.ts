@@ -603,7 +603,7 @@ export interface MethodDataTypes{
   }
   UpdateCustomer: {
     /** An object of type Customer */
-    Customer: Customer
+    custr: Customer
   }
   UpdateInvoice: {
     /** An object of type `Invoice` */

@@ -1,6 +1,6 @@
 {
   "name": "kashflow-api",
-  "version": "1.0.0-alpha2",
+  "version": "1.0.0-alpha3",
   "description": "Kashflow API",
   "main": "lib/kashflow-api.js",
   "types": "lib/kashflow-api.d.ts",

@@ -41,6 +41,31 @@ export class KashflowAPI{
     })
   }
 
+  filterData<T>(data: T): T & {UserName: string, Password: string}{
+    let inData = data as any
+
+    Object.keys(data).forEach((key) => {
+      if(typeof inData[key] === 'object'){
+        Object.keys(inData[key]).forEach((subKey) => {
+          if(
+            inData[key][subKey] === ''
+            ||
+            subKey === 'Updated'
+            ||
+            subKey === 'Created'
+          ){
+            delete inData[key][subKey]
+          }
+        })
+      }
+    })
+
+    inData.UserName = this.username
+    inData.Password = this.password
+
+    return inData as any
+  }
+
   /**
    * Makes a call against the Kashflow API and returns a promise.
    * 
@@ -53,15 +78,10 @@ export class KashflowAPI{
       await this.connectClient()
     }
 
-    let data = inData as MethodDataTypes[K] & {UserName: string, Password: string}
-
-    data.UserName = this.username
-    data.Password = this.password
-
     const func = this.client[method] as (data: MethodDataTypes[K], cb: (err: any, result: any) => void) => Promise<MethodReturnTypes[K]>
 
     return new Promise<MethodReturn<MethodReturnTypes[K]>>((resolve, reject) => {
-      func(data, (err, result) => {
+      func(this.filterData(inData), (err, result) => {
         if(err){
           reject(err)
         }

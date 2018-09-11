@@ -18,7 +18,7 @@ test('It should accept a username and password', () => {
   expect(api.username).toBe('a')
 })
 
-test('It should make an API Request', async () => {
+test('It should make an API Request', async (done) => {
   let api = new KashflowAPI('a', 'b')
 
   api.replaceClient({
@@ -27,32 +27,44 @@ test('It should make an API Request', async () => {
     })
   })
 
-  let customer = await api.call('GetCustomer', {
+  let {status, response: customer} = await api.call('GetCustomer', {
     CustomerCode: 'TES01'
   })
 
-  expect(customer.status).toBe('OK')
-  return expect(customer.response.Name).toBe('Test School')
+  expect(status).toBe('OK')
+  expect(customer.Name).toBe('Test School')
+  done()
 })
 
-/*test('It should handle errors', async () => {
+test('It should handle errors', async (done) => {
   let api = new KashflowAPI('a', 'b')
-
-  api.replaceClient({
-    GetCustomer: (data: any, cb: any) => {
-      cb(null, {
-        Status: 'No',
-        StatusDetails: 'This test has passed'
-      })
-    }
-  })
-
+  
   api.call('GetCustomer', {
     CustomerCode: 'TES01'
   }).then(() => {
     //If this code is run then the test has failed
     expect(true).toBe(false)
+    done()
   }).catch((message: string) => {
-    expect(message).toBe('This test has passed')
+    expect(message).toBe('Incorrect username or password')
+    done()
   })
-})*/
+})
+
+test('It should filter empty fields', async (done) => {
+  let api = new KashflowAPI('a', 'b')
+
+  api.replaceClient({
+    UpdateCustomer: (data: any, cb: any) => {
+      expect(data.custr.foo).toBe(undefined)
+      done()
+    }
+  })
+
+  return api.call('UpdateCustomer', {
+    custr: {
+      foo: '',
+      bar: 'foo'
+    } as any
+  })
+})

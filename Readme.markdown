@@ -1,5 +1,7 @@
 # Kashflow API (Node)
 
+[![Coverage Status](https://coveralls.io/repos/github/Ed-ITSolutions/kashflow-api-node/badge.svg?branch=master)](https://coveralls.io/github/Ed-ITSolutions/kashflow-api-node?branch=master)
+
 The Kashflow api bindings for NodeJS written in Typescript.
 
 ## Install
@@ -41,11 +43,11 @@ import {KashflowAPI, Customer} from 'kashflow-api'
 const useAPI = async () => {
   const api = new KashflowAPI('your-username', 'your-password')
 
-  let result = await api.call('GetCustomer', {
+  let {response: customer} = await api.call('GetCustomer', {
     CustomerCode: 'SOMECODE' // TS will only allow CustomerCode here because of the call to `GetCustomer
   })
 
-  result.response.Name // will produce no errors as the output is typed as Customer
+  customer.Name // will produce no errors as the output is typed as Customer
 }
 
 // Using exported interfaces you can set the types for functions etc...

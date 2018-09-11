@@ -41,6 +41,11 @@ export class KashflowAPI{
     })
   }
 
+  /**
+   * Remove empty strings from the incoming data so the kashflow api doesn't reject the request
+   * 
+   * @param data Incoming data.
+   */
   filterData<T>(data: T): T & {UserName: string, Password: string}{
     let inData = data as any
 

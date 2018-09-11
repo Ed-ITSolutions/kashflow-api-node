@@ -5,6 +5,8 @@ const stubbedMethod = (name: string, response: any) => {
     const returnValue: any = {}
 
     returnValue[name + 'Result'] = response
+    returnValue.Status = 'OK'
+    returnValue.StatusDetail = 'Found Customer'
 
     cb(null, returnValue)
   }
@@ -29,7 +31,8 @@ test('It should make an API Request', async () => {
     CustomerCode: 'TES01'
   })
 
-  return expect(customer.Name).toBe('Test School')
+  expect(customer.status).toBe('OK')
+  return expect(customer.response.Name).toBe('Test School')
 })
 
 /*test('It should handle errors', async () => {

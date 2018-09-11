@@ -21,8 +21,9 @@ var api = new KashflowAPI('your-username', 'your-password')
 
 api.call('GetCustomer', {
   CustomerCode: 'SOMECODE'
-}).then(function(customer){
+}).then(function(result){
   // your code here.
+  result.response // The customer
 })
 ```
 
@@ -40,11 +41,11 @@ import {KashflowAPI, Customer} from 'kashflow-api'
 const useAPI = async () => {
   const api = new KashflowAPI('your-username', 'your-password')
 
-  let customer = await api.call('GetCustomer', {
+  let result = await api.call('GetCustomer', {
     CustomerCode: 'SOMECODE' // TS will only allow CustomerCode here because of the call to `GetCustomer
   })
 
-  customer.Name // will produce no errors as the output is typed as Customer
+  result.response.Name // will produce no errors as the output is typed as Customer
 }
 
 // Using exported interfaces you can set the types for functions etc...

@@ -4,6 +4,12 @@ import {APIMethod} from './kashflow/api-method'
 import {MethodDataTypes} from './kashflow/method-data-types'
 import {MethodReturnTypes} from './kashflow/method-return-types'
 
+interface MethodReturn<K>{
+  response: K
+  status: string
+  detail: string
+}
+
 export class KashflowAPI{
   url = 'https://securedwebapp.com/api/service.asmx?WSDL'
   username: string
@@ -40,9 +46,9 @@ export class KashflowAPI{
    * 
    * @param method The `KFAPIMethod` to call
    * @param inData The data to pass to the API call.
-   * @returns Varies depends on Input
+   * @returns An Object with the response in `response` and the status in `status` and `detail`
    */
-  async call<K extends APIMethod>(method: K, inData: MethodDataTypes[K]): Promise<MethodReturnTypes[K]>{
+  async call<K extends APIMethod>(method: K, inData: MethodDataTypes[K]): Promise<MethodReturn<MethodReturnTypes[K]>>{
     if(!this.client){
       await this.connectClient()
     }
@@ -54,12 +60,16 @@ export class KashflowAPI{
 
     const func = this.client[method] as (data: MethodDataTypes[K], cb: (err: any, result: any) => void) => Promise<MethodReturnTypes[K]>
 
-    return new Promise<MethodReturnTypes[K]>((resolve, reject) => {
+    return new Promise<MethodReturn<MethodReturnTypes[K]>>((resolve, reject) => {
       func(data, (err, result) => {
         if(result.Status === 'NO'){
           reject(result.StatusDetail)
         }else{
-          resolve(result[method + 'Result'])
+          resolve({
+            response: result[method + 'Result'],
+            status: result.Status,
+            detail: result.StatusDetail
+          })
         }
       })
     })

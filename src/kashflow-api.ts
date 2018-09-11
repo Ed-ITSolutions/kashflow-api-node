@@ -13,10 +13,6 @@ export class KashflowAPI{
   constructor(username: string, password: string){
     this.username = username
     this.password = password
-
-    createClient(this.url, (err, client) => {
-      this.client = client
-    })
   }
 
   /**
@@ -28,6 +24,17 @@ export class KashflowAPI{
     this.client = newClient
   }
 
+  async connectClient(){
+    const api = this
+
+    return new Promise((resolve, reject) => {
+      createClient(this.url, (err, client) => {
+        api.client = client
+        resolve()
+      })
+    })
+  }
+
   /**
    * Makes a call against the Kashflow API and returns a promise.
    * 
@@ -36,6 +43,10 @@ export class KashflowAPI{
    * @returns Varies depends on Input
    */
   async call<K extends APIMethod>(method: K, inData: MethodDataTypes[K]): Promise<MethodReturnTypes[K]>{
+    if(!this.client){
+      await this.connectClient()
+    }
+
     let data = inData as MethodDataTypes[K] & {UserName: string, Password: string}
 
     data.UserName = this.username

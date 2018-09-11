@@ -7,7 +7,7 @@
   "scripts": {
     "test": "tsc & jest",
     "compile": "tsc",
-    "ci": "tsc & jest & cat ./coverage/lcov.info | coveralls ",
+    "ci": "tsc & jest & ls & cat ./coverage/lcov.info | coveralls ",
     "prepublishOnly": "tsc"
   },
   "keywords": [

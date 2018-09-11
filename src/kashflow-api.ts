@@ -62,6 +62,10 @@ export class KashflowAPI{
 
     return new Promise<MethodReturn<MethodReturnTypes[K]>>((resolve, reject) => {
       func(data, (err, result) => {
+        if(err){
+          reject(err)
+        }
+
         if(result.Status === 'NO'){
           reject(result.StatusDetail)
         }else{

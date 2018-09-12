@@ -4,6 +4,10 @@
 
 The Kashflow api bindings for NodeJS written in Typescript.
 
+## Before you Install
+
+Version 1.0.0 is still in testing. The javascript works fine and it makes API cals no problem, but the typings enforced by Typescript may require some tweaking as time goes on. If you have any problems open an issue here.
+
 ## Install
 
 ```

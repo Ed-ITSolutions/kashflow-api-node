@@ -73,7 +73,9 @@ export interface MethodReturnTypes{
   GetCustomerByEmail: Customer
   GetCustomerByID: Customer
   GetCustomerCurrency: string
-  GetCustomers: Customer[]
+  GetCustomers: {
+    Customer: Customer[]
+  }
   GetCustomersByPostcode: Customer[]
   GetCustomersModifiedSince: Customer[]
   GetCustomerSources: BasicDataSet[]

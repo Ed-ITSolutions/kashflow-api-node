@@ -76,8 +76,12 @@ export interface MethodReturnTypes{
   GetCustomers: {
     Customer: Customer[]
   }
-  GetCustomersByPostcode: Customer[]
-  GetCustomersModifiedSince: Customer[]
+  GetCustomersByPostcode: {
+    Customer: Customer[]
+  }
+  GetCustomersModifiedSince: {
+    Customer: Customer[]
+  }
   GetCustomerSources: BasicDataSet[]
   GetCustomerVATNumber: string
   GetDigitaCSVFile: string
@@ -129,7 +133,9 @@ export interface MethodReturnTypes{
   GetSupplier: Supplier
   GetSupplierByID: Supplier
   GetSupplierCurrency: string
-  GetSuppliers: Supplier[]
+  GetSuppliers: {
+    Supplier: Supplier[]
+  }
   GetSupplierVATNumber: string
   GetTrialBalance: NominalCode[]
   GetVATRates: BasicDataSet[]
